@@ -3,6 +3,7 @@ import {
     createFragmentContainer,
     graphql
 } from 'react-relay';
+import DeleteCountryMutation from './mutations/DeleteCountryMutation';
 
 class Country extends React.Component {
 
@@ -19,15 +20,25 @@ class Country extends React.Component {
         );
     }
 
-    _handleDelete = () => {}
+    _handleDelete = () => {
+        DeleteCountryMutation(this.props.country.id, this.props.viewer.id);
+    }
 }
 
 export default createFragmentContainer(
     Country,
-    { country: graphql`
-    fragment Country_country on Country {
-        code
-        name
+    {
+        country: graphql`
+            fragment Country_country on Country {
+                id
+                code
+                name
+            }
+        `,
+        viewer: graphql`
+            fragment Country_viewer on Viewer {
+                id
+            }
+        `
     }
-    `}
 );

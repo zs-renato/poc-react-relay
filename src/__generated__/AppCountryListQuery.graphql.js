@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash cb8e7e2f793a61b66443b991f83a35c2
+ * @relayHash b502582a62a12f9f72deadba3af1fd18
  */
 
 /* eslint-disable */
@@ -32,6 +32,7 @@ query AppCountryListQuery {
 }
 
 fragment CountryList_viewer on Viewer {
+  ...Country_viewer
   allCountries(last: 100, orderBy: name_ASC) {
     edges {
       node {
@@ -49,13 +50,25 @@ fragment CountryList_viewer on Viewer {
 }
 
 fragment Country_country on Country {
+  id
   code
   name
+}
+
+fragment Country_viewer on Viewer {
+  id
 }
 */
 
 const node/*: ConcreteRequest*/ = (function(){
-var v0 = [
+var v0 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "id",
+  "args": null,
+  "storageKey": null
+},
+v1 = [
   {
     "kind": "Literal",
     "name": "last",
@@ -66,14 +79,7 @@ var v0 = [
     "name": "orderBy",
     "value": "name_ASC"
   }
-],
-v1 = {
-  "kind": "ScalarField",
-  "alias": null,
-  "name": "id",
-  "args": null,
-  "storageKey": null
-};
+];
 return {
   "kind": "Request",
   "fragment": {
@@ -115,12 +121,13 @@ return {
         "concreteType": "Viewer",
         "plural": false,
         "selections": [
+          (v0/*: any*/),
           {
             "kind": "LinkedField",
             "alias": null,
             "name": "allCountries",
             "storageKey": "allCountries(last:100,orderBy:\"name_ASC\")",
-            "args": (v0/*: any*/),
+            "args": (v1/*: any*/),
             "concreteType": "CountryConnection",
             "plural": false,
             "selections": [
@@ -142,6 +149,7 @@ return {
                     "concreteType": "Country",
                     "plural": false,
                     "selections": [
+                      (v0/*: any*/),
                       {
                         "kind": "ScalarField",
                         "alias": null,
@@ -156,7 +164,6 @@ return {
                         "args": null,
                         "storageKey": null
                       },
-                      (v1/*: any*/),
                       {
                         "kind": "ScalarField",
                         "alias": null,
@@ -206,12 +213,11 @@ return {
             "kind": "LinkedHandle",
             "alias": null,
             "name": "allCountries",
-            "args": (v0/*: any*/),
+            "args": (v1/*: any*/),
             "handle": "connection",
             "key": "CountryList_allCountries",
             "filters": []
-          },
-          (v1/*: any*/)
+          }
         ]
       }
     ]
@@ -220,7 +226,7 @@ return {
     "operationKind": "query",
     "name": "AppCountryListQuery",
     "id": null,
-    "text": "query AppCountryListQuery {\n  viewer {\n    ...CountryList_viewer\n    id\n  }\n}\n\nfragment CountryList_viewer on Viewer {\n  allCountries(last: 100, orderBy: name_ASC) {\n    edges {\n      node {\n        ...Country_country\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n\nfragment Country_country on Country {\n  code\n  name\n}\n",
+    "text": "query AppCountryListQuery {\n  viewer {\n    ...CountryList_viewer\n    id\n  }\n}\n\nfragment CountryList_viewer on Viewer {\n  ...Country_viewer\n  allCountries(last: 100, orderBy: name_ASC) {\n    edges {\n      node {\n        ...Country_country\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n\nfragment Country_country on Country {\n  id\n  code\n  name\n}\n\nfragment Country_viewer on Viewer {\n  id\n}\n",
     "metadata": {}
   }
 };

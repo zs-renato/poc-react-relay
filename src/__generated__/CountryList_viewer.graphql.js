@@ -9,6 +9,7 @@
 /*::
 import type { ReaderFragment } from 'relay-runtime';
 type Country_country$ref = any;
+type Country_viewer$ref = any;
 import type { FragmentReference } from "relay-runtime";
 declare export opaque type CountryList_viewer$ref: FragmentReference;
 declare export opaque type CountryList_viewer$fragmentType: CountryList_viewer$ref;
@@ -20,6 +21,7 @@ export type CountryList_viewer = {|
       |}
     |}>
   |},
+  +$fragmentRefs: Country_viewer$ref,
   +$refType: CountryList_viewer$ref,
 |};
 export type CountryList_viewer$data = CountryList_viewer;
@@ -124,9 +126,14 @@ const node/*: ReaderFragment*/ = {
           ]
         }
       ]
+    },
+    {
+      "kind": "FragmentSpread",
+      "name": "Country_viewer",
+      "args": null
     }
   ]
 };
 // prettier-ignore
-(node/*: any*/).hash = '2a67b3a0220658a566e534c1b3143f05';
+(node/*: any*/).hash = 'a193371045032895629b04d0f014159c';
 module.exports = node;
