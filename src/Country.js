@@ -16,15 +16,18 @@ class Country extends React.Component {
                     <span onClick={this._handleDelete}>Delete</span>
                 </td>
             </tr>
-        )
+        );
     }
 
     _handleDelete = () => {}
 }
 
-export default createFragmentContainer(Country, {country: graphql`
+export default createFragmentContainer(
+    Country,
+    { country: graphql`
     fragment Country_country on Country {
         code
         name
     }
-`})
+    `}
+);

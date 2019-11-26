@@ -12,8 +12,8 @@ import type { FragmentReference } from "relay-runtime";
 declare export opaque type Country_country$ref: FragmentReference;
 declare export opaque type Country_country$fragmentType: Country_country$ref;
 export type Country_country = {|
-  +code: ?string,
-  +name: ?string,
+  +code: string,
+  +name: string,
   +$refType: Country_country$ref,
 |};
 export type Country_country$data = Country_country;

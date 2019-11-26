@@ -1,47 +1,36 @@
 import React from 'react';
 import Country from './Country';
-import environment from './Environment'
-import {
-    QueryRenderer,
-    graphql
-} from 'react-relay';
-
-const AppCountryListQuery = graphql`
-  query CountryListQuery {
-    countries {
-        ...Country_country
-    }
-  }
-`
+import { createFragmentContainer, graphql } from 'react-relay';
 
 class CountryList extends React.Component {
     render() {
         return (
-            <QueryRenderer
-                environment={environment}
-                query={AppCountryListQuery}
-                render={({error, props}) => {
-                    if(error){
-                        return <div>{error.message}</div>
-                    } else if (props) {
-                        return  <table style={{margin: 'auto'}}>
-                                    <thead>
-                                        <th>Country Name</th>
-                                        <th>Delete</th>
-                                    </thead>
-                                    <tbody>
-                                    {props.countries.map((country) => 
-                                        <Country key={country.code} country={country} />
-                                    )}
-                                    </tbody>
-                                </table>
-                    }
-                    return <div>Carregando</div>
-                }}
-            />
-            
-        )
+            <table style={{margin: 'auto'}}>
+                <thead>
+                    <th>Country Name</th>
+                    <th>Delete</th>
+                </thead>
+                <tbody>
+                {this.props.viewer.allCountries.edges.map(({ node }) =>
+                    <Country key={node.code} country={node} />
+                )}
+                </tbody>
+            </table>
+        );
     }
 }
 
-export default CountryList;
+export default createFragmentContainer(
+    CountryList,
+    { viewer: graphql`
+        fragment CountryList_viewer on Viewer {
+            allCountries(last: 100, orderBy: name_ASC) @connection(key: "CountryList_allCountries", filters: []) {
+                edges {
+                    node {
+                        ...Country_country
+                    }
+                }
+            }
+        }
+    `},
+);
