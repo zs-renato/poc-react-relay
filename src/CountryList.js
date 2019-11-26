@@ -3,15 +3,19 @@ import Country from './Country';
 import { createFragmentContainer, graphql } from 'react-relay';
 
 class CountryList extends React.Component {
+    
     render() {
+        console.log(this.props.viewer.allCountries.edges);
         return (
-            <table style={{margin: 'auto'}}>
+            <table>
                 <thead>
                     <th>Country Name</th>
+                    <th>Country Code</th>
                     <th>Delete</th>
                 </thead>
                 <tbody>
-                {this.props.viewer.allCountries.edges.map(({ node }) =>
+                {
+                    this.props.viewer.allCountries.edges.map(({ node }) =>
                     <Country key={node.id} country={node} viewer={this.props.viewer} />
                 )}
                 </tbody>

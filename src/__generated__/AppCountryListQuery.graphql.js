@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash b502582a62a12f9f72deadba3af1fd18
+ * @relayHash 85714a5ac22cb3ed779cc740d16a2722
  */
 
 /* eslint-disable */
@@ -10,10 +10,11 @@
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
 type CountryList_viewer$ref = any;
+type CreateCountry_viewer$ref = any;
 export type AppCountryListQueryVariables = {||};
 export type AppCountryListQueryResponse = {|
   +viewer: {|
-    +$fragmentRefs: CountryList_viewer$ref
+    +$fragmentRefs: CreateCountry_viewer$ref & CountryList_viewer$ref
   |}
 |};
 export type AppCountryListQuery = {|
@@ -26,6 +27,7 @@ export type AppCountryListQuery = {|
 /*
 query AppCountryListQuery {
   viewer {
+    ...CreateCountry_viewer
     ...CountryList_viewer
     id
   }
@@ -56,6 +58,10 @@ fragment Country_country on Country {
 }
 
 fragment Country_viewer on Viewer {
+  id
+}
+
+fragment CreateCountry_viewer on Viewer {
   id
 }
 */
@@ -98,6 +104,11 @@ return {
         "concreteType": "Viewer",
         "plural": false,
         "selections": [
+          {
+            "kind": "FragmentSpread",
+            "name": "CreateCountry_viewer",
+            "args": null
+          },
           {
             "kind": "FragmentSpread",
             "name": "CountryList_viewer",
@@ -226,11 +237,11 @@ return {
     "operationKind": "query",
     "name": "AppCountryListQuery",
     "id": null,
-    "text": "query AppCountryListQuery {\n  viewer {\n    ...CountryList_viewer\n    id\n  }\n}\n\nfragment CountryList_viewer on Viewer {\n  ...Country_viewer\n  allCountries(last: 100, orderBy: name_ASC) {\n    edges {\n      node {\n        ...Country_country\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n\nfragment Country_country on Country {\n  id\n  code\n  name\n}\n\nfragment Country_viewer on Viewer {\n  id\n}\n",
+    "text": "query AppCountryListQuery {\n  viewer {\n    ...CreateCountry_viewer\n    ...CountryList_viewer\n    id\n  }\n}\n\nfragment CountryList_viewer on Viewer {\n  ...Country_viewer\n  allCountries(last: 100, orderBy: name_ASC) {\n    edges {\n      node {\n        ...Country_country\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n\nfragment Country_country on Country {\n  id\n  code\n  name\n}\n\nfragment Country_viewer on Viewer {\n  id\n}\n\nfragment CreateCountry_viewer on Viewer {\n  id\n}\n",
     "metadata": {}
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '6377a823823e031cce8447e199b3e52d';
+(node/*: any*/).hash = '0bdc2e9adb17ce9898ad45f27b18d18c';
 module.exports = node;

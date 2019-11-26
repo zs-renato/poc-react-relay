@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import CountryList from './CountryList';
-import './App.css';
+import CreateCountry from './CreateCountry';
 import environment from './Environment';
 import {
   QueryRenderer,
@@ -10,6 +10,7 @@ import {
 const AppCountryListQuery = graphql`
   query AppCountryListQuery {
     viewer {
+      ...CreateCountry_viewer
       ...CountryList_viewer
     }
   }
@@ -18,19 +19,26 @@ const AppCountryListQuery = graphql`
 class App extends Component {
   render (){
     return (
-      <QueryRenderer
-                environment={environment}
-                query={AppCountryListQuery}
-                render={({error, props}) => {
-                    if(error){
-                        return <div>{error.message}</div>;
-                    } else if (props) {
-                        return  <CountryList viewer={props.viewer} />;
-                    } else {
-                      return <div>Carregando</div>;
-                    }
-                }}
-            />
+      <div>
+        
+        <QueryRenderer
+            environment={environment}
+            query={AppCountryListQuery}
+            render={({error, props}) => {
+                if(error){
+                    return <div>{error.message}</div>;
+                } else if (props) {
+                    return (
+                      <div style={{margin: 'auto'}}>
+                        <CreateCountry viewer={props.viewer}/>
+                        <CountryList viewer={props.viewer} />
+                      </div>
+                    )
+                } else {
+                  return <div>Carregando</div>;
+                }
+            }} />
+      </div>
     );
   }
 }

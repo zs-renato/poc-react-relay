@@ -14,7 +14,10 @@ class Country extends React.Component {
                     {this.props.country.name}
                 </td>
                 <td>
-                    <span onClick={this._handleDelete}>Delete</span>
+                    {this.props.country.code}
+                </td>
+                <td>
+                    <button onClick={this._handleDelete}>Delete</button>
                 </td>
             </tr>
         );
